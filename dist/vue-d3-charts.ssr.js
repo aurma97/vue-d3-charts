@@ -1328,10 +1328,15 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
 
             _this3.tooltip.html(function (_) {
               if (_this3.tData[i].values && _this3.tData[i].values.length) {
+                console.log("if #1");
+
                 if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null)) {
+                  console.log("if #2");
                   var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
                   return "\n                                        <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
                 } else {
+                  console.log("if #3");
+
                   var _label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
 
                   return "\n                                        <div>".concat(_label, ": ").concat(_this3.tData[i].values[0].y, "</div>");

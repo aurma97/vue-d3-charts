@@ -1036,11 +1036,15 @@ class d3linechart extends d3chart {
           console.log(j);
           this.tooltip.html(_ => {
             if (this.tData[i].values && this.tData[i].values.length) {
+              console.log("if #1");
+
               if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
+                console.log("if #2");
                 const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
                 return `
                                         <div>${label}: ${this.tData[i].values[j].y}</div>`;
               } else {
+                console.log("if #3");
                 const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
                 return `
                                         <div>${label}: ${this.tData[i].values[0].y}</div>`;
