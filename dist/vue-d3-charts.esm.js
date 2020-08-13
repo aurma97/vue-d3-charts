@@ -1032,7 +1032,7 @@ class d3linechart extends d3chart {
 
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
-          const result = `${d}.${k}`;
+          const result = `d.${k}`;
           console.log(result);
 
           if (d.logs) {

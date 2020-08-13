@@ -1323,7 +1323,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
 
         if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) {
           gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
-            var result = "".concat(d, ".").concat(k);
+            var result = "d.".concat(k);
             console.log(result);
 
             if (d.logs) {
