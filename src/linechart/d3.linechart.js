@@ -257,9 +257,8 @@ class d3linechart extends d3chart {
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
                     .on('mouseover', (d, j) => {
-                        console.log("not null and not undefined")
+                        // console.log("not null and not undefined")
                         this.tooltip.html(_ => {
-                            console.log(this.tData[i].values)
                             if (this.tData[i].values && this.tData[i].values.length) {
                                 if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
                                     console.log("First if")
@@ -274,7 +273,7 @@ class d3linechart extends d3chart {
                                         ? this.cfg.tooltip.labels[i]
                                         : k;
                                     return `
-                                        <div>${label}: ${this.tData[i].values.y}</div>`
+                                        <div>${label}: ${this.tData[i].values[0].y}</div>`
                                 }
                             } else
                                 return `<div></div>`

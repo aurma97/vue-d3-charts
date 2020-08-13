@@ -1032,10 +1032,8 @@ class d3linechart extends d3chart {
 
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) !== undefined) {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
-          console.log("not null and not undefined");
+          // console.log("not null and not undefined")
           this.tooltip.html(_ => {
-            console.log(this.tData[i].values);
-
             if (this.tData[i].values && this.tData[i].values.length) {
               if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
                 console.log("First if");
@@ -1046,7 +1044,7 @@ class d3linechart extends d3chart {
                 console.log("second if");
                 const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
                 return `
-                                        <div>${label}: ${this.tData[i].values.y}</div>`;
+                                        <div>${label}: ${this.tData[i].values[0].y}</div>`;
               }
             } else return `<div></div>`;
           }).classed('active', true);
