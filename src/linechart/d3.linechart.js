@@ -256,19 +256,17 @@ class d3linechart extends d3chart {
                     .attr('class', 'chart__point-hover chart__point-hover--linechart')
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
-                    .on('mouseover', (d, j) => {
-                        // console.log("not null and not undefined")
+                    .on('mouseover', (d, j, n) => {
+                        console.log(n)
                         this.tooltip.html(_ => {
                             if (this.tData[i].values && this.tData[i].values.length) {
                                 if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
-                                    console.log("First if")
                                     const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
                                         ? this.cfg.tooltip.labels[i]
                                         : k;
                                     return `
                                         <div>${label}: ${this.tData[i].values[j].y}</div>`
                                 } else {
-                                    console.log("second if")
                                     const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
                                         ? this.cfg.tooltip.labels[i]
                                         : k;
