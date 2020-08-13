@@ -686,6 +686,7 @@ var d3chart = /*#__PURE__*/function () {
       this.bindData();
       this.setScales();
       this.enterElements();
+      this.exitElements();
       this.updateElements();
       this.exitElements();
     }
@@ -1300,8 +1301,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
     value: function enterElements() {
       var _this3 = this;
 
-      this.updateData(this.data); // Elements to add
-
+      // Elements to add
       var newgroups = this.linesgroup.enter().append('g').attr("class", "chart__lines-group chart__lines-group--linechart"); // Lines
 
       newgroups.append('path').attr("class", "chart__line chart__line--linechart").attr('fill', 'transparent').attr("d", function (d) {
@@ -1363,8 +1363,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
     value: function updateElements() {
       var _this4 = this;
 
-      this.updateData(this.data); // Color lines
-
+      // Color lines
       this.linesgroup.attr('stroke', function (d) {
         return _this4.colorElement(d, 'key');
       }); // Redraw lines
