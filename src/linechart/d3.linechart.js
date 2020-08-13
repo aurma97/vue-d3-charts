@@ -257,18 +257,24 @@ class d3linechart extends d3chart {
                     .attr('r', this.cfg.points.hoverSize)
                     .on('mouseover', (d, j) => {
                         console.log(d)
-                        this.tooltip.html(_ => {
-                            if ((this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
-                                console.log(this.tData[i].values[j].y)
-                                const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
-                                    ? this.cfg.tooltip.labels[i]
-                                    : k;
-                                return `
+                        if (d.logs) {
+                            this.tooltip.html(_ => {
+                                return `<div>logs: ${d.logs}</div>`
+                            }).classed('active', true)
+                        } else {
+                            this.tooltip.html(_ => {
+                                if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
+                                    console.log(this.tData[i].values[j].y)
+                                    const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
+                                        ? this.cfg.tooltip.labels[i]
+                                        : k;
+                                    return `
                             <div>${label}: ${this.tData[i].values[j].y}</div>`
-                            } else
-                                return `<div></div>`
-                        })
-                            .classed('active', true);
+                                } else
+                                    return `<div></div>`
+                            }).classed('active', true)
+                        }
+                        ;
                     })
 
                     .on('mouseout', _ => {
