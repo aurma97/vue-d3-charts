@@ -1031,20 +1031,11 @@ class d3linechart extends d3chart {
 
       gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
         this.tooltip.html(_ => {
-          console.log(this.tData);
-
-          if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
-            console.log("there");
-
-            if (this.tData[i].values[j].y === 1) {
-              const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
-              return `
-                            <div>${label}: 1}</div>`;
-            } else {
-              const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
-              return `
-                            <div>${label}: ${this.tData[i].values[j].y !== undefined ? this.tData[i].values[j].y : 0}</div>`;
-            }
+          if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
+            console.log(this.tData[i].values[j].y);
+            const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
+            return `
+                            <div>${label}: ${this.tData[i].values[j].y}</div>`;
           } else return `<div></div>`;
         }).classed('active', true);
       }).on('mouseout', _ => {
