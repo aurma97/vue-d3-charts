@@ -259,7 +259,7 @@ class d3linechart extends d3chart {
                     .on('mouseover', (d, j) => {
                         console.log("not null and not undefined")
                         this.tooltip.html(_ => {
-                            if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
+                            if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
                                 console.log(this.tData[i].values[j].y)
                                 const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
                                     ? this.cfg.tooltip.labels[i]
