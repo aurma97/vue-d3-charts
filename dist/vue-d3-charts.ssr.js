@@ -1333,7 +1333,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
                 } else {
                   var _label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
 
-                  return "\n                                        <div>".concat(_label, ": ").concat(_this3.tData[i].values[i].y, "</div>");
+                  return "\n                                        <div>".concat(_label, ": ").concat(_this3.tData[i].values[0].y, "</div>");
                 }
               } else return "<div></div>";
             }).classed('active', true);
@@ -1362,8 +1362,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
     value: function updateElements() {
       var _this4 = this;
 
-      this.updateData(); // Color lines
-
+      // Color lines
       this.linesgroup.attr('stroke', function (d) {
         return _this4.colorElement(d, 'key');
       }); // Redraw lines

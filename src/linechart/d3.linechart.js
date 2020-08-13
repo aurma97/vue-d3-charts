@@ -223,6 +223,7 @@ class d3linechart extends d3chart {
      * Add new chart's elements
      */
     enterElements() {
+
         // Elements to add
         const newgroups = this.linesgroup
             .enter().append('g')
@@ -270,7 +271,7 @@ class d3linechart extends d3chart {
                                         ? this.cfg.tooltip.labels[i]
                                         : k;
                                     return `
-                                        <div>${label}: ${this.tData[i].values[i].y}</div>`
+                                        <div>${label}: ${this.tData[i].values[0].y}</div>`
                                 }
                             } else
                                 return `<div></div>`
@@ -301,7 +302,7 @@ class d3linechart extends d3chart {
      * Update chart's elements based on data change
      */
     updateElements() {
-        this.updateData()
+
         // Color lines
         this.linesgroup
             .attr('stroke', d => this.colorElement(d, 'key'))

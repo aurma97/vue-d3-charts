@@ -1042,7 +1042,7 @@ class d3linechart extends d3chart {
               } else {
                 const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
                 return `
-                                        <div>${label}: ${this.tData[i].values[i].y}</div>`;
+                                        <div>${label}: ${this.tData[i].values[0].y}</div>`;
               }
             } else return `<div></div>`;
           }).classed('active', true);
@@ -1067,8 +1067,7 @@ class d3linechart extends d3chart {
 
 
   updateElements() {
-    this.updateData(); // Color lines
-
+    // Color lines
     this.linesgroup.attr('stroke', d => this.colorElement(d, 'key')); // Redraw lines
 
     this.g.selectAll('.chart__line').attr('stroke', d => this.colorElement(d, 'key')).transition(this.transition).attr("d", (d, i) => this.line(this.tData[i].values)); // Don't continue if points are disabled
