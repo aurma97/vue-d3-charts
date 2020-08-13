@@ -1032,8 +1032,7 @@ class d3linechart extends d3chart {
 
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) !== undefined) {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
-          console.log(this.tData);
-          console.log(this.cfg.tooltip);
+          console.log(j);
           this.tooltip.html(_ => {
             if (this.tData[i].values && this.tData[i].values.length) {
               if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
