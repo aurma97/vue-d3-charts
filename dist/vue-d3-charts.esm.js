@@ -1034,7 +1034,7 @@ class d3linechart extends d3chart {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
           console.log("not null and not undefined");
           this.tooltip.html(_ => {
-            console.log(this.tData[i].values[j]);
+            console.log(this.tData[i].values);
 
             if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
               console.log(this.tData[i].values[j].y);
