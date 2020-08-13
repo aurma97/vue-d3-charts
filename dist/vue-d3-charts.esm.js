@@ -699,8 +699,9 @@ class d3barchart extends d3chart {
       return this.cfg.orientation !== 'horizontal' ? this.cfg.height : this.xScaleInn(this.cfg.values[i % this.cfg.values.length]);
     }).attr('height', 0).attr('width', 0).on('mouseover', (d, i) => {
       const key = this.cfg.values[i % this.cfg.values.length];
+      const label = this.cfg.tooltip ? d[this.cfg.tooltip.label] : key;
       this.tooltip.html(() => {
-        return `<div>${key}: ${d[key]}</div>`;
+        return `<div>${label}: ${d[key]}</div>`;
       }).classed('active', true);
     }).on('mouseout', () => {
       this.tooltip.classed('active', false);
@@ -1029,20 +1030,24 @@ class d3linechart extends d3chart {
       // Point group
       let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`); // Hover point
 
-      gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
-        this.tooltip.html(_ => {
-          if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
-            console.log(this.tData[i].values[j].y);
-            const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
-            return `
+      if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) {
+        gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
+          console.log(d);
+          this.tooltip.html(_ => {
+            if (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1) {
+              console.log(this.tData[i].values[j].y);
+              const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
+              return `
                             <div>${label}: ${this.tData[i].values[j].y}</div>`;
-          } else return `<div></div>`;
-        }).classed('active', true);
-      }).on('mouseout', _ => {
-        this.tooltip.classed('active', false);
-      }).on('mousemove', _ => {
-        this.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
-      }); // Visible point
+            } else return `<div></div>`;
+          }).classed('active', true);
+        }).on('mouseout', _ => {
+          this.tooltip.classed('active', false);
+        }).on('mousemove', _ => {
+          this.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
+        });
+      } // Visible point
+
 
       gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
       this.pointsg.push({

@@ -250,33 +250,36 @@ class d3linechart extends d3chart {
                 .attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`)
 
             // Hover point
-            gp.append('circle')
-                .attr('class', 'chart__point-hover chart__point-hover--linechart')
-                .attr('fill', 'transparent')
-                .attr('r', this.cfg.points.hoverSize)
-                .on('mouseover', (d, j) => {
-                    this.tooltip.html(_ => {
-                        if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
-                            console.log(this.tData[i].values[j].y)
-                            const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
-                                ? this.cfg.tooltip.labels[i]
-                                : k;
-                            return `
+            if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) {
+                gp.append('circle')
+                    .attr('class', 'chart__point-hover chart__point-hover--linechart')
+                    .attr('fill', 'transparent')
+                    .attr('r', this.cfg.points.hoverSize)
+                    .on('mouseover', (d, j) => {
+                        console.log(d)
+                        this.tooltip.html(_ => {
+                            if ((this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
+                                console.log(this.tData[i].values[j].y)
+                                const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
+                                    ? this.cfg.tooltip.labels[i]
+                                    : k;
+                                return `
                             <div>${label}: ${this.tData[i].values[j].y}</div>`
-                        } else
-                            return `<div></div>`
+                            } else
+                                return `<div></div>`
+                        })
+                            .classed('active', true);
                     })
-                        .classed('active', true);
-                })
 
-                .on('mouseout', _ => {
-                    this.tooltip.classed('active', false)
-                })
-                .on('mousemove', _ => {
-                    this.tooltip
-                        .style('left', window.event['pageX'] - 28 + 'px')
-                        .style('top', window.event['pageY'] - 40 + 'px')
-                })
+                    .on('mouseout', _ => {
+                        this.tooltip.classed('active', false)
+                    })
+                    .on('mousemove', _ => {
+                        this.tooltip
+                            .style('left', window.event['pageX'] - 28 + 'px')
+                            .style('top', window.event['pageY'] - 40 + 'px')
+                    })
+            }
 
             // Visible point
             gp.append('circle')

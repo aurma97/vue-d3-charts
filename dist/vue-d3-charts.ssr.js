@@ -950,9 +950,10 @@ var d3barchart = /*#__PURE__*/function (_d3chart) {
         return _this3.cfg.orientation !== 'horizontal' ? _this3.cfg.height : _this3.xScaleInn(_this3.cfg.values[i % _this3.cfg.values.length]);
       }).attr('height', 0).attr('width', 0).on('mouseover', function (d, i) {
         var key = _this3.cfg.values[i % _this3.cfg.values.length];
+        var label = _this3.cfg.tooltip ? d[_this3.cfg.tooltip.label] : key;
 
         _this3.tooltip.html(function () {
-          return "<div>".concat(key, ": ").concat(d[key], "</div>");
+          return "<div>".concat(label, ": ").concat(d[key], "</div>");
         }).classed('active', true);
       }).on('mouseout', function () {
         _this3.tooltip.classed('active', false);
@@ -1320,19 +1321,24 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
         }); // Hover point
 
 
-        gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
-          _this3.tooltip.html(function (_) {
-            if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null || _this3.tData[i].values[j].y !== 1)) {
-              console.log(_this3.tData[i].values[j].y);
-              var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
-              return "\n                            <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
-            } else return "<div></div>";
-          }).classed('active', true);
-        }).on('mouseout', function (_) {
-          _this3.tooltip.classed('active', false);
-        }).on('mousemove', function (_) {
-          _this3.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
-        }); // Visible point
+        if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) {
+          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
+            console.log(d);
+
+            _this3.tooltip.html(function (_) {
+              if (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null || _this3.tData[i].values[j].y !== 1) {
+                console.log(_this3.tData[i].values[j].y);
+                var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
+                return "\n                            <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
+              } else return "<div></div>";
+            }).classed('active', true);
+          }).on('mouseout', function (_) {
+            _this3.tooltip.classed('active', false);
+          }).on('mousemove', function (_) {
+            _this3.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
+          });
+        } // Visible point
+
 
         gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
 
