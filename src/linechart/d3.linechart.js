@@ -256,26 +256,14 @@ class d3linechart extends d3chart {
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
                     .on('mouseover', (d, j) => {
-                        const result = d[k]
-                        console.log(result)
-                        if (d.logs) {
-                            console.log("d.logs")
+                        if (d[k]) {
                             this.tooltip.html(_ => {
-                                return `<div>logs: ${d.logs}</div>`
-                            }).classed('active', true)
+                                return `<div>${k}: ${d[k]}</div>`
+                            })
+                                .classed('active', true)
                         } else {
-                            console.log('this.data[i]...')
-                            this.tooltip.html(_ => {
-                                if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
-                                    console.log(this.tData[i].values[j].y)
-                                    const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
-                                        ? this.cfg.tooltip.labels[i]
-                                        : k;
-                                    return `
-                            <div>${label}: ${this.tData[i].values[j].y}</div>`
-                                } else
-                                    return `<div></div>`
-                            }).classed('active', true)
+                            this.tooltip.html(_ => `<div></div>`)
+                                .classed('active', true)
                         }
                         ;
                     })
