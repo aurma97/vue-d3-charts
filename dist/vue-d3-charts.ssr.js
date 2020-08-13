@@ -580,6 +580,7 @@ var d3chart = /*#__PURE__*/function () {
     key: "enterData",
     value: function enterData(data) {
       this.data = this.data.concat(data);
+      this.updateData();
       this.setScales();
       this.updateChart();
     }
@@ -685,6 +686,7 @@ var d3chart = /*#__PURE__*/function () {
       this.computeData();
       this.bindData();
       this.setScales();
+      this.exitElements();
       this.enterElements();
       this.updateElements();
       this.exitElements();

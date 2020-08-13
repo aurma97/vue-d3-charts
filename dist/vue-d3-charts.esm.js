@@ -370,6 +370,7 @@ class d3chart {
 
   enterData(data) {
     this.data = this.data.concat(data);
+    this.updateData();
     this.setScales();
     this.updateChart();
   }
@@ -465,6 +466,7 @@ class d3chart {
     this.computeData();
     this.bindData();
     this.setScales();
+    this.exitElements();
     this.enterElements();
     this.updateElements();
     this.exitElements();
