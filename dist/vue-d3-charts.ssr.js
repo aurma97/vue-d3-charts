@@ -686,7 +686,6 @@ var d3chart = /*#__PURE__*/function () {
       this.bindData();
       this.setScales();
       this.enterElements();
-      this.exitElements();
       this.updateElements();
       this.exitElements();
     }
@@ -1323,7 +1322,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
 
 
         if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) !== undefined) {
-          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
+          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).data(_this3.data).on('mouseover', function (d, j) {
             console.log(j);
 
             _this3.tooltip.html(function (_) {

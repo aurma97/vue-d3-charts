@@ -206,7 +206,6 @@ class d3chart {
         this.bindData();
         this.setScales();
         this.enterElements();
-        this.exitElements();
         this.updateElements();
         this.exitElements();
     }

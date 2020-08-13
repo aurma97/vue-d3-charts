@@ -255,6 +255,7 @@ class d3linechart extends d3chart {
                     .attr('class', 'chart__point-hover chart__point-hover--linechart')
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
+                    .data(this.data)
                     .on('mouseover', (d, j) => {
                         console.log(j)
                         this.tooltip.html(_ => {
