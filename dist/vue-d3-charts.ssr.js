@@ -1322,7 +1322,9 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
 
 
         if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) !== undefined) {
-          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
+          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j, k, l) {
+            console.log(k, l);
+
             _this3.tooltip.html(function (_) {
               if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null)) {
                 console.log("if #1"); // const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
@@ -1331,10 +1333,9 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
 
                 var key = _this3.cfg.values[i % _this3.cfg.values.length];
                 console.log(_this3.data, key);
-                var label = _this3.cfg.tooltip ? d[_this3.cfg.tooltip.label] : key;
 
                 _this3.tooltip.html(function () {
-                  return "<div>".concat(label !== undefined ? label : key, ": ").concat(d[key], "</div>");
+                  return "<div>".concat(key, ": ").concat(d[key], "</div>");
                 });
 
                 return "\n                                        <div>".concat(label, ": ").concat(d[key], "</div>");
