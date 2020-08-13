@@ -1323,7 +1323,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
           _this3.tooltip.html(function (_) {
             var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
-            return "\n                            <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y ? _this3.tData[i].values[j].y : 0, "</div>\n                        ");
+            return "\n                            <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y !== undefined ? _this3.tData[i].values[j].y : 0, "</div>\n                        ");
           }).classed('active', true);
         }).on('mouseout', function (_) {
           _this3.tooltip.classed('active', false);

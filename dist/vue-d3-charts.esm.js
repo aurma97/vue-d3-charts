@@ -1033,7 +1033,7 @@ class d3linechart extends d3chart {
         this.tooltip.html(_ => {
           const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i] ? this.cfg.tooltip.labels[i] : k;
           return `
-                            <div>${label}: ${this.tData[i].values[j].y ? this.tData[i].values[j].y : 0}</div>
+                            <div>${label}: ${this.tData[i].values[j].y !== undefined ? this.tData[i].values[j].y : 0}</div>
                         `;
         }).classed('active', true);
       }).on('mouseout', _ => {
