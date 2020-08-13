@@ -1031,8 +1031,9 @@ class d3linechart extends d3chart {
       let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`); // Hover point
 
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) !== undefined) {
-        gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j, n) => {
-          console.log(n);
+        gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
+          console.log(this.tData);
+          console.log(this.cfg.tooltip);
           this.tooltip.html(_ => {
             if (this.tData[i].values && this.tData[i].values.length) {
               if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
