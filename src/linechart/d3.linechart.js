@@ -244,6 +244,7 @@ class d3linechart extends d3chart {
             // Point group
             let gp = this.g.selectAll('.chart__points-group--' + k)
                 .data(this.data).enter()
+                .exit().remove()
                 .append('g')
                 .attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k)
                 .attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`)
@@ -255,7 +256,6 @@ class d3linechart extends d3chart {
                     .attr('class', 'chart__point-hover chart__point-hover--linechart')
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
-                    .data(this.data)
                     .on('mouseover', (d, j) => {
                         console.log(j)
                         this.tooltip.html(_ => {

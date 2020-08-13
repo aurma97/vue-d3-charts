@@ -1316,13 +1316,13 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
       if (this.cfg.points === false) return;
       this.cfg.values.forEach(function (k, i) {
         // Point group
-        var gp = _this3.g.selectAll('.chart__points-group--' + k).data(_this3.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
+        var gp = _this3.g.selectAll('.chart__points-group--' + k).data(_this3.data).enter().exit().remove().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
           return "translate(".concat(_this3.xScale(d.jsdate), ",").concat(_this3.cfg.height, ")");
         }); // Hover point
 
 
         if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) !== undefined) {
-          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).data(_this3.data).on('mouseover', function (d, j) {
+          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
             console.log(j);
 
             _this3.tooltip.html(function (_) {
