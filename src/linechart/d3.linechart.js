@@ -303,7 +303,6 @@ class d3linechart extends d3chart {
      * Update chart's elements based on data change
      */
     updateElements() {
-        this.updateData(this.data)
         // Color lines
         this.linesgroup
             .attr('stroke', d => this.colorElement(d, 'key'))

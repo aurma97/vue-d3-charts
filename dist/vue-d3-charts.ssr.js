@@ -1364,8 +1364,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
     value: function updateElements() {
       var _this4 = this;
 
-      this.updateData(this.data); // Color lines
-
+      // Color lines
       this.linesgroup.attr('stroke', function (d) {
         return _this4.colorElement(d, 'key');
       }); // Redraw lines
