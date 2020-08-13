@@ -244,7 +244,7 @@ class d3linechart extends d3chart {
             // Point group
             let gp = this.g.selectAll('.chart__points-group--' + k)
                 .data(this.data).enter()
-                .exit().remove()
+
                 .append('g')
                 .attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k)
                 .attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`)
@@ -257,19 +257,20 @@ class d3linechart extends d3chart {
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
                     .on('mouseover', (d, j) => {
-                        console.log(j)
                         this.tooltip.html(_ => {
-                            if (this.tData[i].values && this.tData[i].values.length) {
-                                console.log("if #1")
+                            if (d.logs) {
+                                this.tooltip.html(_ => {
+                                    return `<div>logs: ${d.logs}</div>`;
+                                }).classed('active', true);
+                            } else if (this.tData[i].values && this.tData[i].values.length) {
                                 if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
-                                    console.log("if #2")
+                                    // console.log("if #2")
                                     const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
                                         ? this.cfg.tooltip.labels[i]
                                         : k;
                                     return `
                                         <div>${label}: ${this.tData[i].values[j].y}</div>`
                                 } else {
-                                    console.log("if #3")
                                     const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
                                         ? this.cfg.tooltip.labels[i]
                                         : k;
