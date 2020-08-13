@@ -1314,6 +1314,44 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
       }); // Don't continue if points are disabled
 
       if (this.cfg.points === false) return;
+      this.cfg.values.forEach(function (k, i) {
+        // Point group
+        var gp = _this3.g.selectAll('.chart__points-group--' + k).data(_this3.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
+          return "translate(".concat(_this3.xScale(d.jsdate), ",").concat(_this3.cfg.height, ")");
+        }); // Hover point
+
+
+        if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) !== undefined) {
+          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
+            console.log(_this3.data, d);
+
+            _this3.tooltip.html(function (_) {
+              if (_this3.tData[i].values && _this3.tData[i].values.length) {
+                if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null)) {
+                  var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
+                  return "\n                                        <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
+                } else {
+                  var _label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
+
+                  return "\n                                        <div>".concat(_label, ": ").concat(_this3.tData[i].values[0].y, "</div>");
+                }
+              } else return "<div></div>";
+            }).classed('active', true);
+          }).on('mouseout', function (_) {
+            _this3.tooltip.classed('active', false);
+          }).on('mousemove', function (_) {
+            _this3.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
+          });
+        } // Visible point
+
+
+        gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
+
+        _this3.pointsg.push({
+          selection: gp,
+          key: k
+        });
+      });
     }
     /**
      * Update chart's elements based on data change
@@ -1347,44 +1385,6 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
         }).attr('r', _this4.cfg.points.visibleSize); // Hover point
 
         p.selection.selectAll('.chart__point-hover').attr('r', _this4.cfg.points.hoverSize);
-      });
-      this.cfg.values.forEach(function (k, i) {
-        // Point group
-        var gp = _this4.g.selectAll('.chart__points-group--' + k).data(_this4.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
-          return "translate(".concat(_this4.xScale(d.jsdate), ",").concat(_this4.cfg.height, ")");
-        }); // Hover point
-
-
-        if (_this4.tData && _this4.tData.length && _this4.tData[i] && _this4.tData[i].values && _this4.tData[i].values.length && (_this4.tData && _this4.tData.length && _this4.tData[i] && _this4.tData[i].values && _this4.tData[i].values.length) !== undefined) {
-          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this4.cfg.points.hoverSize).on('mouseover', function (d, j) {
-            console.log(j);
-
-            _this4.tooltip.html(function (_) {
-              if (_this4.tData[i].values && _this4.tData[i].values.length) {
-                if (_this4.tData[i].values[j] && (_this4.tData[i].values[j].y !== undefined || _this4.tData[i].values[j].y !== null)) {
-                  var label = _this4.cfg.tooltip.labels && _this4.cfg.tooltip.labels[i] ? _this4.cfg.tooltip.labels[i] : k;
-                  return "\n                                        <div>".concat(label, ": ").concat(_this4.tData[i].values[j].y, "</div>");
-                } else {
-                  var _label = _this4.cfg.tooltip.labels && _this4.cfg.tooltip.labels[i] ? _this4.cfg.tooltip.labels[i] : k;
-
-                  return "\n                                        <div>".concat(_label, ": ").concat(_this4.tData[i].values[0].y, "</div>");
-                }
-              } else return "<div></div>";
-            }).classed('active', true);
-          }).on('mouseout', function (_) {
-            _this4.tooltip.classed('active', false);
-          }).on('mousemove', function (_) {
-            _this4.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
-          });
-        } // Visible point
-
-
-        gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
-
-        _this4.pointsg.push({
-          selection: gp,
-          key: k
-        });
       });
     }
     /**

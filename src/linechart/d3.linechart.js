@@ -241,44 +241,6 @@ class d3linechart extends d3chart {
         if (this.cfg.points === false)
             return;
 
-
-    }
-
-    /**
-     * Update chart's elements based on data change
-     */
-    updateElements() {
-
-        // Color lines
-        this.linesgroup
-            .attr('stroke', d => this.colorElement(d, 'key'))
-
-        // Redraw lines
-        this.g.selectAll('.chart__line')
-            .attr('stroke', d => this.colorElement(d, 'key'))
-            .transition(this.transition)
-            .attr("d", (d, i) => this.line(this.tData[i].values));
-
-        // Don't continue if points are disabled
-        if (this.cfg.points === false)
-            return;
-
-        // Redraw points
-        this.pointsg.forEach((p, i) => {
-            p.selection
-                .transition(this.transition)
-                .attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.yScale(d[p.key])})`)
-
-            // Visible point
-            p.selection.selectAll('.chart__point-visible')
-                .attr('fill', d => this.colorElement(p, 'key'))
-                .attr('r', this.cfg.points.visibleSize)
-
-            // Hover point
-            p.selection.selectAll('.chart__point-hover')
-                .attr('r', this.cfg.points.hoverSize)
-        })
-
         this.cfg.values.forEach((k, i) => {
             // Point group
             let gp = this.g.selectAll('.chart__points-group--' + k)
@@ -295,7 +257,7 @@ class d3linechart extends d3chart {
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
                     .on('mouseover', (d, j) => {
-                        console.log(j)
+                        console.log(this.data, d)
                         this.tooltip.html(_ => {
                             if (this.tData[i].values && this.tData[i].values.length) {
                                 if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
@@ -333,6 +295,42 @@ class d3linechart extends d3chart {
                 .attr('pointer-events', 'none');
 
             this.pointsg.push({ selection: gp, key: k })
+        })
+    }
+
+    /**
+     * Update chart's elements based on data change
+     */
+    updateElements() {
+
+        // Color lines
+        this.linesgroup
+            .attr('stroke', d => this.colorElement(d, 'key'))
+
+        // Redraw lines
+        this.g.selectAll('.chart__line')
+            .attr('stroke', d => this.colorElement(d, 'key'))
+            .transition(this.transition)
+            .attr("d", (d, i) => this.line(this.tData[i].values));
+
+        // Don't continue if points are disabled
+        if (this.cfg.points === false)
+            return;
+
+        // Redraw points
+        this.pointsg.forEach((p, i) => {
+            p.selection
+                .transition(this.transition)
+                .attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.yScale(d[p.key])})`)
+
+            // Visible point
+            p.selection.selectAll('.chart__point-visible')
+                .attr('fill', d => this.colorElement(p, 'key'))
+                .attr('r', this.cfg.points.visibleSize)
+
+            // Hover point
+            p.selection.selectAll('.chart__point-hover')
+                .attr('r', this.cfg.points.hoverSize)
         })
     }
 
