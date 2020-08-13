@@ -579,7 +579,6 @@ var d3chart = /*#__PURE__*/function () {
   }, {
     key: "enterData",
     value: function enterData(data) {
-      console.log("Enter", data);
       this.data = this.data.concat(data);
       this.setScales();
       this.updateChart();
@@ -591,7 +590,6 @@ var d3chart = /*#__PURE__*/function () {
   }, {
     key: "updateData",
     value: function updateData(data) {
-      console.log("Updated", data);
       this.data = _toConsumableArray(data);
       this.setScales();
       this.updateChart();
@@ -1323,17 +1321,29 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
         }); // Hover point
 
 
-        if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) {
+        if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) !== undefined) {
           gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
-            if (d[k]) {
-              _this3.tooltip.html(function (_) {
-                return "<div>".concat(k, ": ").concat(d[k], "</div>");
-              }).classed('active', true);
-            } else {
-              _this3.tooltip.html(function (_) {
-                return "<div></div>";
-              }).classed('active', true);
-            }
+            _this3.tooltip.html(function (_) {
+              if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null)) {
+                console.log("if #1"); // const label = this.cfg.tooltip.labels && this.cfg.tooltip.labels[i]
+                //     ? this.cfg.tooltip.labels[i]
+                //     : k;
+
+                var key = _this3.cfg.values[i % _this3.cfg.values.length];
+                console.log(_this3.data, key);
+                var label = _this3.cfg.tooltip ? d[_this3.cfg.tooltip.label] : key;
+
+                _this3.tooltip.html(function () {
+                  return "<div>".concat(label !== undefined ? label : key, ": ").concat(d[key], "</div>");
+                });
+
+                return "\n                                        <div>".concat(label, ": ").concat(d[key], "</div>");
+              } else {
+                _this3.tooltip.html(function (_) {
+                  return "<div></div>";
+                }).classed('active', true);
+              }
+            }).classed('active', true);
           }).on('mouseout', function (_) {
             _this3.tooltip.classed('active', false);
           }).on('mousemove', function (_) {
@@ -1382,39 +1392,6 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
         }).attr('r', _this4.cfg.points.visibleSize); // Hover point
 
         p.selection.selectAll('.chart__point-hover').attr('r', _this4.cfg.points.hoverSize);
-      });
-      this.cfg.values.forEach(function (k, i) {
-        // Point group
-        var gp = _this4.g.selectAll('.chart__points-group--' + k).data(_this4.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
-          return "translate(".concat(_this4.xScale(d.jsdate), ",").concat(_this4.cfg.height, ")");
-        }); // Hover point
-
-
-        if (_this4.tData && _this4.tData.length && _this4.tData[i] && _this4.tData[i].values && _this4.tData[i].values.length) {
-          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this4.cfg.points.hoverSize).on('mouseover', function (d, j) {
-            if (d[k]) {
-              _this4.tooltip.html(function (_) {
-                return "<div>".concat(k, ": ").concat(d[k], "</div>");
-              }).classed('active', true);
-            } else {
-              _this4.tooltip.html(function (_) {
-                return "<div></div>";
-              }).classed('active', true);
-            }
-          }).on('mouseout', function (_) {
-            _this4.tooltip.classed('active', false);
-          }).on('mousemove', function (_) {
-            _this4.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
-          });
-        } // Visible point
-
-
-        gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
-
-        _this4.pointsg.push({
-          selection: gp,
-          key: k
-        });
       });
     }
     /**
