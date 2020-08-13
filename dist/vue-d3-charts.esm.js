@@ -1016,7 +1016,8 @@ class d3linechart extends d3chart {
 
 
   enterElements() {
-    // Elements to add
+    this.updateData(this.data); // Elements to add
+
     const newgroups = this.linesgroup.enter().append('g').attr("class", "chart__lines-group chart__lines-group--linechart"); // Lines
 
     newgroups.append('path').attr("class", "chart__line chart__line--linechart").attr('fill', 'transparent').attr("d", d => this.line(d.values.map(v => ({
@@ -1028,7 +1029,6 @@ class d3linechart extends d3chart {
     if (this.cfg.points === false) return;
     this.cfg.values.forEach((k, i) => {
       // Point group
-      this.updateData(this.data);
       let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`); // Hover point
 
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) !== undefined) {
@@ -1068,7 +1068,8 @@ class d3linechart extends d3chart {
 
 
   updateElements() {
-    // Color lines
+    this.updateData(this.data); // Color lines
+
     this.linesgroup.attr('stroke', d => this.colorElement(d, 'key')); // Redraw lines
 
     this.g.selectAll('.chart__line').attr('stroke', d => this.colorElement(d, 'key')).transition(this.transition).attr("d", (d, i) => this.line(this.tData[i].values)); // Don't continue if points are disabled

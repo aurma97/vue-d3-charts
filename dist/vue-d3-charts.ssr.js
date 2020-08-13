@@ -1300,7 +1300,8 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
     value: function enterElements() {
       var _this3 = this;
 
-      // Elements to add
+      this.updateData(this.data); // Elements to add
+
       var newgroups = this.linesgroup.enter().append('g').attr("class", "chart__lines-group chart__lines-group--linechart"); // Lines
 
       newgroups.append('path').attr("class", "chart__line chart__line--linechart").attr('fill', 'transparent').attr("d", function (d) {
@@ -1316,8 +1317,6 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
       if (this.cfg.points === false) return;
       this.cfg.values.forEach(function (k, i) {
         // Point group
-        _this3.updateData(_this3.data);
-
         var gp = _this3.g.selectAll('.chart__points-group--' + k).data(_this3.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
           return "translate(".concat(_this3.xScale(d.jsdate), ",").concat(_this3.cfg.height, ")");
         }); // Hover point
@@ -1364,7 +1363,8 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
     value: function updateElements() {
       var _this4 = this;
 
-      // Color lines
+      this.updateData(this.data); // Color lines
+
       this.linesgroup.attr('stroke', function (d) {
         return _this4.colorElement(d, 'key');
       }); // Redraw lines

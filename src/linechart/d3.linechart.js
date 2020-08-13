@@ -223,7 +223,7 @@ class d3linechart extends d3chart {
      * Add new chart's elements
      */
     enterElements() {
-
+        this.updateData(this.data)
         // Elements to add
         const newgroups = this.linesgroup
             .enter().append('g')
@@ -243,7 +243,6 @@ class d3linechart extends d3chart {
 
         this.cfg.values.forEach((k, i) => {
             // Point group
-            this.updateData(this.data)
             let gp = this.g.selectAll('.chart__points-group--' + k)
                 .data(this.data).enter()
                 .append('g')
@@ -303,6 +302,7 @@ class d3linechart extends d3chart {
      * Update chart's elements based on data change
      */
     updateElements() {
+        this.updateData(this.data)
         // Color lines
         this.linesgroup
             .attr('stroke', d => this.colorElement(d, 'key'))
