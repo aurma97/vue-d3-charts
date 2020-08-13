@@ -223,7 +223,6 @@ class d3linechart extends d3chart {
      * Add new chart's elements
      */
     enterElements() {
-        this.updateData()
         // Elements to add
         const newgroups = this.linesgroup
             .enter().append('g')
@@ -302,7 +301,7 @@ class d3linechart extends d3chart {
      * Update chart's elements based on data change
      */
     updateElements() {
-
+        this.updateData()
         // Color lines
         this.linesgroup
             .attr('stroke', d => this.colorElement(d, 'key'))

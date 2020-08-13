@@ -370,7 +370,6 @@ class d3chart {
 
   enterData(data) {
     this.data = this.data.concat(data);
-    this.updateData();
     this.setScales();
     this.updateChart();
   }
@@ -466,7 +465,6 @@ class d3chart {
     this.computeData();
     this.bindData();
     this.setScales();
-    this.exitElements();
     this.enterElements();
     this.updateElements();
     this.exitElements();
@@ -1018,8 +1016,7 @@ class d3linechart extends d3chart {
 
 
   enterElements() {
-    this.updateData(); // Elements to add
-
+    // Elements to add
     const newgroups = this.linesgroup.enter().append('g').attr("class", "chart__lines-group chart__lines-group--linechart"); // Lines
 
     newgroups.append('path').attr("class", "chart__line chart__line--linechart").attr('fill', 'transparent').attr("d", d => this.line(d.values.map(v => ({
@@ -1070,7 +1067,8 @@ class d3linechart extends d3chart {
 
 
   updateElements() {
-    // Color lines
+    this.updateData(); // Color lines
+
     this.linesgroup.attr('stroke', d => this.colorElement(d, 'key')); // Redraw lines
 
     this.g.selectAll('.chart__line').attr('stroke', d => this.colorElement(d, 'key')).transition(this.transition).attr("d", (d, i) => this.line(this.tData[i].values)); // Don't continue if points are disabled
