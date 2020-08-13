@@ -1326,7 +1326,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
             console.log("not null and not undefined");
 
             _this3.tooltip.html(function (_) {
-              console.log(_this3.tData[i].values[j].y);
+              console.log(_this3.tData[i].values[j]);
 
               if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null)) {
                 console.log(_this3.tData[i].values[j].y);
