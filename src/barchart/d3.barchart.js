@@ -228,7 +228,7 @@ class d3barchart extends d3chart {
         const key = this.cfg.values[i % this.cfg.values.length];
         const label = this.cfg.tooltip ? d[this.cfg.tooltip.label] : key;
         this.tooltip.html(() => {
-          return `<div>${label}: ${d[key]}</div>`
+          return `<div>${label !== undefined ? label : key}: ${d[key]}</div>`
         })
           .classed('active', true);
       })

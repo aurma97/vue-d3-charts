@@ -701,7 +701,7 @@ class d3barchart extends d3chart {
       const key = this.cfg.values[i % this.cfg.values.length];
       const label = this.cfg.tooltip ? d[this.cfg.tooltip.label] : key;
       this.tooltip.html(() => {
-        return `<div>${label}: ${d[key]}</div>`;
+        return `<div>${label !== undefined ? label : key}: ${d[key]}</div>`;
       }).classed('active', true);
     }).on('mouseout', () => {
       this.tooltip.classed('active', false);
@@ -1032,13 +1032,13 @@ class d3linechart extends d3chart {
 
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
-          console.log(d);
-
           if (d.logs) {
+            console.log("d.logs");
             this.tooltip.html(_ => {
               return `<div>logs: ${d.logs}</div>`;
             }).classed('active', true);
           } else {
+            console.log('this.data[i]...');
             this.tooltip.html(_ => {
               if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null || this.tData[i].values[j].y !== 1)) {
                 console.log(this.tData[i].values[j].y);
