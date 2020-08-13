@@ -1321,25 +1321,25 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
         }); // Hover point
 
 
-        if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) !== undefined) {
+        if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) {
           gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
-            _this3.tooltip.html(function (_) {
-              if (d.logs) {
-                _this3.tooltip.html(function (_) {
-                  return "<div>logs: ".concat(d.logs, "</div>");
-                }).classed('active', true);
-              } else if (_this3.tData[i].values && _this3.tData[i].values.length) {
-                if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null)) {
-                  // console.log("if #2")
-                  var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
-                  return "\n                                        <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
-                } else {
-                  var _label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
+            if (d.logs) {
+              console.log("d.logs");
 
-                  return "\n                                        <div>".concat(_label, ": ").concat(_this3.tData[i].values[0].y, "</div>");
-                }
-              } else return "<div></div>";
-            }).classed('active', true);
+              _this3.tooltip.html(function (_) {
+                return "<div>logs: ".concat(d.logs, "</div>");
+              }).classed('active', true);
+            } else {
+              console.log('this.data[i]...');
+
+              _this3.tooltip.html(function (_) {
+                if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null || _this3.tData[i].values[j].y !== 1)) {
+                  console.log(_this3.tData[i].values[j].y);
+                  var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
+                  return "\n                            <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
+                } else return "<div></div>";
+              }).classed('active', true);
+            }
           }).on('mouseout', function (_) {
             _this3.tooltip.classed('active', false);
           }).on('mousemove', function (_) {
