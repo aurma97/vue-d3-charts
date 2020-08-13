@@ -223,7 +223,7 @@ class d3linechart extends d3chart {
      * Add new chart's elements
      */
     enterElements() {
-
+        this.updateData()
         // Elements to add
         const newgroups = this.linesgroup
             .enter().append('g')
@@ -257,7 +257,7 @@ class d3linechart extends d3chart {
                     .attr('fill', 'transparent')
                     .attr('r', this.cfg.points.hoverSize)
                     .on('mouseover', (d, j) => {
-                        console.log(k, i)
+                        console.log(j)
                         this.tooltip.html(_ => {
                             if (this.tData[i].values && this.tData[i].values.length) {
                                 if (this.tData[i].values[j] && (this.tData[i].values[j].y !== undefined || this.tData[i].values[j].y !== null)) {
@@ -271,7 +271,7 @@ class d3linechart extends d3chart {
                                         ? this.cfg.tooltip.labels[i]
                                         : k;
                                     return `
-                                        <div>${label}: ${this.tData[i].values[0].y}</div>`
+                                        <div>${label}: ${this.tData[i].values[i].y}</div>`
                                 }
                             } else
                                 return `<div></div>`

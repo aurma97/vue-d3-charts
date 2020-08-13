@@ -1302,7 +1302,8 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
     value: function enterElements() {
       var _this3 = this;
 
-      // Elements to add
+      this.updateData(); // Elements to add
+
       var newgroups = this.linesgroup.enter().append('g').attr("class", "chart__lines-group chart__lines-group--linechart"); // Lines
 
       newgroups.append('path').attr("class", "chart__line chart__line--linechart").attr('fill', 'transparent').attr("d", function (d) {
@@ -1325,7 +1326,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
 
         if (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length && (_this3.tData && _this3.tData.length && _this3.tData[i] && _this3.tData[i].values && _this3.tData[i].values.length) !== undefined) {
           gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
-            console.log(k, i);
+            console.log(j);
 
             _this3.tooltip.html(function (_) {
               if (_this3.tData[i].values && _this3.tData[i].values.length) {
@@ -1335,7 +1336,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
                 } else {
                   var _label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
 
-                  return "\n                                        <div>".concat(_label, ": ").concat(_this3.tData[i].values[0].y, "</div>");
+                  return "\n                                        <div>".concat(_label, ": ").concat(_this3.tData[i].values[i].y, "</div>");
                 }
               } else return "<div></div>";
             }).classed('active', true);
