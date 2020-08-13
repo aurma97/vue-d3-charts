@@ -99,6 +99,7 @@ class d3chart {
     * Add new data elements
     */
     enterData(data) {
+        console.log("Enter", data)
         this.data = this.data.concat(data);
         this.setScales();
         this.updateChart();
@@ -108,6 +109,7 @@ class d3chart {
     * Update existing data elements
     */
     updateData(data) {
+        console.log("Updated", data)
         this.data = [...data];
         this.setScales();
         this.updateChart();

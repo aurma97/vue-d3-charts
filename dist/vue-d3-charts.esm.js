@@ -369,6 +369,7 @@ class d3chart {
 
 
   enterData(data) {
+    console.log("Enter", data);
     this.data = this.data.concat(data);
     this.setScales();
     this.updateChart();
@@ -379,6 +380,7 @@ class d3chart {
 
 
   updateData(data) {
+    console.log("Updated", data);
     this.data = [...data];
     this.setScales();
     this.updateChart();
