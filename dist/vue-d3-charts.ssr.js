@@ -1325,13 +1325,19 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
           gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
             console.log(d);
 
-            _this3.tooltip.html(function (_) {
-              if (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null || _this3.tData[i].values[j].y !== 1) {
-                console.log(_this3.tData[i].values[j].y);
-                var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
-                return "\n                            <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
-              } else return "<div></div>";
-            }).classed('active', true);
+            if (d.logs) {
+              _this3.tooltip.html(function (_) {
+                return "<div>logs: ".concat(d.logs, "</div>");
+              }).classed('active', true);
+            } else {
+              _this3.tooltip.html(function (_) {
+                if (_this3.tData[i].values[j] && (_this3.tData[i].values[j].y !== undefined || _this3.tData[i].values[j].y !== null || _this3.tData[i].values[j].y !== 1)) {
+                  console.log(_this3.tData[i].values[j].y);
+                  var label = _this3.cfg.tooltip.labels && _this3.cfg.tooltip.labels[i] ? _this3.cfg.tooltip.labels[i] : k;
+                  return "\n                            <div>".concat(label, ": ").concat(_this3.tData[i].values[j].y, "</div>");
+                } else return "<div></div>";
+              }).classed('active', true);
+            }
           }).on('mouseout', function (_) {
             _this3.tooltip.classed('active', false);
           }).on('mousemove', function (_) {
