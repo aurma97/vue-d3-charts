@@ -54,3 +54,7 @@ See [contribution guide](CONTRIB.md).
 ### License
 
 This repository is available under **GNU General Public License v3.0**. See [details](LICENSE.md).
+
+### Good to know
+
+The tooltip column has to be numeric to display something
