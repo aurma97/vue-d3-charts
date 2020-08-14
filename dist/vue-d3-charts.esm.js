@@ -1033,7 +1033,7 @@ class d3linechart extends d3chart {
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) !== undefined) {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
           this.tooltip.html(_ => {
-            return `<div>${key}: ${d[key]}</div>`;
+            return `<div>${k}: ${d[k]}</div>`;
           }).classed('active', true);
         }).on('mouseout', _ => {
           this.tooltip.classed('active', false);

@@ -258,7 +258,7 @@ class d3linechart extends d3chart {
                     .attr('r', this.cfg.points.hoverSize)
                     .on('mouseover', (d, j) => {
                         this.tooltip.html(_ => {
-                            return `<div>${key}: ${d[key]}</div>`
+                            return `<div>${k}: ${d[k]}</div>`
                         }).classed('active', true)
                     })
 
