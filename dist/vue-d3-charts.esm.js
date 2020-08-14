@@ -938,18 +938,25 @@ class d3linechart extends d3chart {
       tData[i] = {};
       tData[i].key = j;
       tData[i].values = [];
-    }); // this.data.forEach(d => { d.jsdate = this.parseTime(d[this.cfg.date.key]) });
-    // this.data.sort((a, b) => a.jsdate - b.jsdate);
-    // this.data.forEach((d, c) => {
-    //     d.min = 9999999999999999999;
-    //     d.max = -9999999999999999999;
-    //     this.cfg.values.forEach((j, i) => {
-    //         tData[i].values.push({ x: d.jsdate, y: +d[j], k: i })
-    //         if (d[j] < d.min) d.min = +d[j];
-    //         if (d[j] > d.max) d.max = +d[j];
-    //     })
-    // });
-    // this.tData = tData;
+    });
+    this.data.forEach(d => {
+      d.jsdate = this.parseTime(d[this.cfg.date.key]);
+    });
+    this.data.sort((a, b) => a.jsdate - b.jsdate);
+    this.data.forEach((d, c) => {
+      d.min = 9999999999999999999;
+      d.max = -9999999999999999999;
+      this.cfg.values.forEach((j, i) => {
+        tData[i].values.push({
+          x: d.jsdate,
+          y: +d[j],
+          k: i
+        });
+        if (d[j] < d.min) d.min = +d[j];
+        if (d[j] > d.max) d.max = +d[j];
+      });
+    });
+    this.tData = tData;
   }
   /**
    * Set up chart dimensions (non depending on data)
@@ -1021,8 +1028,7 @@ class d3linechart extends d3chart {
     if (this.cfg.points === false) return;
     this.cfg.values.forEach((k, i) => {
       // Point group
-      let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`);
-      gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
+      let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`).append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
         this.tooltip.html(_ => {
           return `
                                         <div>${key}: ${d[key]}</div>`;

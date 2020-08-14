@@ -1193,24 +1193,36 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
   }, {
     key: "computeData",
     value: function computeData() {
+      var _this = this;
+
       // Calcule transpose data
       var tData = [];
       this.cfg.values.forEach(function (j, i) {
         tData[i] = {};
         tData[i].key = j;
         tData[i].values = [];
-      }); // this.data.forEach(d => { d.jsdate = this.parseTime(d[this.cfg.date.key]) });
-      // this.data.sort((a, b) => a.jsdate - b.jsdate);
-      // this.data.forEach((d, c) => {
-      //     d.min = 9999999999999999999;
-      //     d.max = -9999999999999999999;
-      //     this.cfg.values.forEach((j, i) => {
-      //         tData[i].values.push({ x: d.jsdate, y: +d[j], k: i })
-      //         if (d[j] < d.min) d.min = +d[j];
-      //         if (d[j] > d.max) d.max = +d[j];
-      //     })
-      // });
-      // this.tData = tData;
+      });
+      this.data.forEach(function (d) {
+        d.jsdate = _this.parseTime(d[_this.cfg.date.key]);
+      });
+      this.data.sort(function (a, b) {
+        return a.jsdate - b.jsdate;
+      });
+      this.data.forEach(function (d, c) {
+        d.min = 9999999999999999999;
+        d.max = -9999999999999999999;
+
+        _this.cfg.values.forEach(function (j, i) {
+          tData[i].values.push({
+            x: d.jsdate,
+            y: +d[j],
+            k: i
+          });
+          if (d[j] < d.min) d.min = +d[j];
+          if (d[j] > d.max) d.max = +d[j];
+        });
+      });
+      this.tData = tData;
     }
     /**
      * Set up chart dimensions (non depending on data)
@@ -1231,7 +1243,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
   }, {
     key: "setScales",
     value: function setScales() {
-      var _this = this;
+      var _this2 = this;
 
       // Calcule vertical scale
       this.yScale.domain([0, d3$2.max(this.data, function (d) {
@@ -1250,9 +1262,9 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
 
 
       this.line.x(function (d) {
-        return _this.xScale(d.x);
+        return _this2.xScale(d.x);
       }).y(function (d) {
-        return _this.yScale(d.y);
+        return _this2.yScale(d.y);
       }).curve(d3$2[this.cfg.curve]); // Redraw grid
 
       this.yGrid.call(d3$2.axisLeft(this.yScale).tickSize(-this.cfg.width).ticks(this.cfg.axis.yTicks, this.cfg.axis.yFormat)); // Redraw horizontal axis
@@ -1284,13 +1296,13 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
   }, {
     key: "enterElements",
     value: function enterElements() {
-      var _this2 = this;
+      var _this3 = this;
 
       // Elements to add
       var newgroups = this.linesgroup.enter().append('g').attr("class", "chart__lines-group chart__lines-group--linechart"); // Lines
 
       newgroups.append('path').attr("class", "chart__line chart__line--linechart").attr('fill', 'transparent').attr("d", function (d) {
-        return _this2.line(d.values.map(function (v) {
+        return _this3.line(d.values.map(function (v) {
           return {
             y: 0,
             x: v.x,
@@ -1302,23 +1314,22 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
       if (this.cfg.points === false) return;
       this.cfg.values.forEach(function (k, i) {
         // Point group
-        var gp = _this2.g.selectAll('.chart__points-group--' + k).data(_this2.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
-          return "translate(".concat(_this2.xScale(d.jsdate), ",").concat(_this2.cfg.height, ")");
-        });
-
-        gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this2.cfg.points.hoverSize).on('mouseover', function (d, j) {
-          _this2.tooltip.html(function (_) {
+        var gp = _this3.g.selectAll('.chart__points-group--' + k).data(_this3.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
+          return "translate(".concat(_this3.xScale(d.jsdate), ",").concat(_this3.cfg.height, ")");
+        }).append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this3.cfg.points.hoverSize).on('mouseover', function (d, j) {
+          _this3.tooltip.html(function (_) {
             return "\n                                        <div>".concat(key, ": ").concat(d[key], "</div>");
           }).classed('active', true);
         }).on('mouseout', function (_) {
-          _this2.tooltip.classed('active', false);
+          _this3.tooltip.classed('active', false);
         }).on('mousemove', function (_) {
-          _this2.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
+          _this3.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
         }); // Visible point
+
 
         gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
 
-        _this2.pointsg.push({
+        _this3.pointsg.push({
           selection: gp,
           key: k
         });
@@ -1331,31 +1342,31 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
   }, {
     key: "updateElements",
     value: function updateElements() {
-      var _this3 = this;
+      var _this4 = this;
 
       // Color lines
       this.linesgroup.attr('stroke', function (d) {
-        return _this3.colorElement(d, 'key');
+        return _this4.colorElement(d, 'key');
       }); // Redraw lines
 
       this.g.selectAll('.chart__line').attr('stroke', function (d) {
-        return _this3.colorElement(d, 'key');
+        return _this4.colorElement(d, 'key');
       }).transition(this.transition).attr("d", function (d, i) {
-        return _this3.line(_this3.tData[i].values);
+        return _this4.line(_this4.tData[i].values);
       }); // Don't continue if points are disabled
 
       if (this.cfg.points === false) return; // Redraw points
 
       this.pointsg.forEach(function (p, i) {
-        p.selection.transition(_this3.transition).attr('transform', function (d) {
-          return "translate(".concat(_this3.xScale(d.jsdate), ",").concat(_this3.yScale(d[p.key]), ")");
+        p.selection.transition(_this4.transition).attr('transform', function (d) {
+          return "translate(".concat(_this4.xScale(d.jsdate), ",").concat(_this4.yScale(d[p.key]), ")");
         }); // Visible point
 
         p.selection.selectAll('.chart__point-visible').attr('fill', function (d) {
-          return _this3.colorElement(p, 'key');
-        }).attr('r', _this3.cfg.points.visibleSize); // Hover point
+          return _this4.colorElement(p, 'key');
+        }).attr('r', _this4.cfg.points.visibleSize); // Hover point
 
-        p.selection.selectAll('.chart__point-hover').attr('r', _this3.cfg.points.hoverSize);
+        p.selection.selectAll('.chart__point-hover').attr('r', _this4.cfg.points.hoverSize);
       });
     }
     /**
