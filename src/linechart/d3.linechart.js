@@ -130,7 +130,7 @@ class d3linechart extends d3chart {
         //         if (d[j] > d.max) d.max = +d[j];
         //     })
         // });
-        this.tData = tData;
+        // this.tData = tData;
     }
 
     /**
@@ -270,12 +270,12 @@ class d3linechart extends d3chart {
                         .style('top', window.event['pageY'] - 40 + 'px')
                 })
 
-            // // Visible point
-            // gp.append('circle')
-            //     .attr('class', 'chart__point-visible chart__point-visible--linechart')
-            //     .attr('pointer-events', 'none');
+            // Visible point
+            gp.append('circle')
+                .attr('class', 'chart__point-visible chart__point-visible--linechart')
+                .attr('pointer-events', 'none');
 
-            // this.pointsg.push({ selection: gp, key: k })
+            this.pointsg.push({ selection: gp, key: k })
         })
     }
 
