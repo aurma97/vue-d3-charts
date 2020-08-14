@@ -1028,7 +1028,7 @@ class d3linechart extends d3chart {
     if (this.cfg.points === false) return;
     this.cfg.values.forEach((k, i) => {
       // Point group
-      let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`); // Hover point
+      let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`); // Hover point
 
       if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) !== undefined) {
         gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
@@ -1069,6 +1069,29 @@ class d3linechart extends d3chart {
       p.selection.selectAll('.chart__point-visible').attr('fill', d => this.colorElement(p, 'key')).attr('r', this.cfg.points.visibleSize); // Hover point
 
       p.selection.selectAll('.chart__point-hover').attr('r', this.cfg.points.hoverSize);
+    });
+    this.cfg.values.forEach((k, i) => {
+      // Point group
+      let gp = this.g.selectAll('.chart__points-group--' + k).data(this.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', d => `translate(${this.xScale(d.jsdate)},${this.cfg.height})`); // Hover point
+
+      if (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length && (this.tData && this.tData.length && this.tData[i] && this.tData[i].values && this.tData[i].values.length) !== undefined) {
+        gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', this.cfg.points.hoverSize).on('mouseover', (d, j) => {
+          this.tooltip.html(_ => {
+            return `<div>${k}: ${d[k]}</div>`;
+          }).classed('active', true);
+        }).on('mouseout', _ => {
+          this.tooltip.classed('active', false);
+        }).on('mousemove', _ => {
+          this.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
+        });
+      } // Visible point
+
+
+      gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
+      this.pointsg.push({
+        selection: gp,
+        key: k
+      });
     });
   }
   /**

@@ -1316,7 +1316,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
       if (this.cfg.points === false) return;
       this.cfg.values.forEach(function (k, i) {
         // Point group
-        var gp = _this3.g.selectAll('.chart__points-group--' + k).data(_this3.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
+        var gp = _this3.g.selectAll('.chart__points-group--' + k).data(_this3.data).append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
           return "translate(".concat(_this3.xScale(d.jsdate), ",").concat(_this3.cfg.height, ")");
         }); // Hover point
 
@@ -1374,6 +1374,33 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
         }).attr('r', _this4.cfg.points.visibleSize); // Hover point
 
         p.selection.selectAll('.chart__point-hover').attr('r', _this4.cfg.points.hoverSize);
+      });
+      this.cfg.values.forEach(function (k, i) {
+        // Point group
+        var gp = _this4.g.selectAll('.chart__points-group--' + k).data(_this4.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
+          return "translate(".concat(_this4.xScale(d.jsdate), ",").concat(_this4.cfg.height, ")");
+        }); // Hover point
+
+
+        if (_this4.tData && _this4.tData.length && _this4.tData[i] && _this4.tData[i].values && _this4.tData[i].values.length && (_this4.tData && _this4.tData.length && _this4.tData[i] && _this4.tData[i].values && _this4.tData[i].values.length) !== undefined) {
+          gp.append('circle').attr('class', 'chart__point-hover chart__point-hover--linechart').attr('fill', 'transparent').attr('r', _this4.cfg.points.hoverSize).on('mouseover', function (d, j) {
+            _this4.tooltip.html(function (_) {
+              return "<div>".concat(k, ": ").concat(d[k], "</div>");
+            }).classed('active', true);
+          }).on('mouseout', function (_) {
+            _this4.tooltip.classed('active', false);
+          }).on('mousemove', function (_) {
+            _this4.tooltip.style('left', window.event['pageX'] - 28 + 'px').style('top', window.event['pageY'] - 40 + 'px');
+          });
+        } // Visible point
+
+
+        gp.append('circle').attr('class', 'chart__point-visible chart__point-visible--linechart').attr('pointer-events', 'none');
+
+        _this4.pointsg.push({
+          selection: gp,
+          key: k
+        });
       });
     }
     /**
