@@ -318,6 +318,7 @@ class d3linechart extends d3chart {
         this.cfg.values.forEach((k, i) => {
             // Point group
             let gp = this.g.selectAll('.chart__points-group--' + k)
+                .exit().remove()
                 .data(this.data).enter()
 
                 .append('g')

@@ -1377,7 +1377,7 @@ var d3linechart = /*#__PURE__*/function (_d3chart) {
       });
       this.cfg.values.forEach(function (k, i) {
         // Point group
-        var gp = _this4.g.selectAll('.chart__points-group--' + k).data(_this4.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
+        var gp = _this4.g.selectAll('.chart__points-group--' + k).exit().remove().data(_this4.data).enter().append('g').attr('class', 'chart__points-group chart__points-group--linechart chart__points-group--' + k).attr('transform', function (d) {
           return "translate(".concat(_this4.xScale(d.jsdate), ",").concat(_this4.cfg.height, ")");
         }); // Hover point
 
